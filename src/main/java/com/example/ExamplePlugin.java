@@ -11,6 +11,12 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.Item;
+import net.runelite.api.InventoryID;
+import net.runelite.api.EquipmentInventorySlot;
+import net.runelite.client.game.ItemManager;
+
 
 @Slf4j
 @PluginDescriptor(
@@ -24,6 +30,9 @@ public class ExamplePlugin extends Plugin
 	@Inject
 	private ExampleConfig config;
 
+	@Inject
+	private ItemManager itemManager;
+
 	@Override
 	protected void startUp() throws Exception
 	{
@@ -36,12 +45,32 @@ public class ExamplePlugin extends Plugin
 		log.info("Example stopped!");
 	}
 
+	//@Subscribe
+	//public void onGameStateChanged(GameStateChanged gameStateChanged)
+	//{
+		//if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
+		//{
+		//	client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Example says " + config.greeting(), null);
+		//}
+	//}
+
 	@Subscribe
-	public void onGameStateChanged(GameStateChanged gameStateChanged)
+	public void onItemContainerChanged(ItemContainerChanged event)
 	{
-		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
-		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Example says " + config.greeting(), null);
+		if (event.getItemContainer() == client.getItemContainer(InventoryID.EQUIPMENT)) {
+			Item[] items = event.getItemContainer().getItems();
+			if (items != null && items.length > EquipmentInventorySlot.WEAPON.getSlotIdx()) {
+				Item weaponItem = items[EquipmentInventorySlot.WEAPON.getSlotIdx()];
+				if (weaponItem != null) {
+					int itemId = weaponItem.getId();
+					String weaponName = itemManager.getItemComposition(itemId).getName();
+
+					// Extract other weapon properties as needed
+
+					// Now you can use the weapon information to update your UI
+					client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Your current equipped weapon is " + weaponName, null);
+				}
+			}
 		}
 	}
 
