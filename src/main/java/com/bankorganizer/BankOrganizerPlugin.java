@@ -1,4 +1,4 @@
-package com.example;
+package com.bankorganizer;
 
 import com.google.inject.Provides;
 import javax.inject.Inject;
@@ -20,15 +20,15 @@ import net.runelite.client.game.ItemManager;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Example"
+	name = "Bank Organizer"
 )
-public class ExamplePlugin extends Plugin
+public class BankOrganizerPlugin extends Plugin
 {
 	@Inject
 	private Client client;
 
 	@Inject
-	private ExampleConfig config;
+	private BankOrganizerConfig config;
 
 	@Inject
 	private ItemManager itemManager;
@@ -54,7 +54,8 @@ public class ExamplePlugin extends Plugin
 		//}
 	//}
 
-	@Subscribe
+//	Displays currently equipped weapon on equip
+	/*@Subscribe
 	public void onItemContainerChanged(ItemContainerChanged event)
 	{
 		if (event.getItemContainer() == client.getItemContainer(InventoryID.EQUIPMENT)) {
@@ -72,11 +73,11 @@ public class ExamplePlugin extends Plugin
 				}
 			}
 		}
-	}
+	}*/
 
 	@Provides
-	ExampleConfig provideConfig(ConfigManager configManager)
+	BankOrganizerConfig provideConfig(ConfigManager configManager)
 	{
-		return configManager.getConfig(ExampleConfig.class);
+		return configManager.getConfig(BankOrganizerConfig.class);
 	}
 }
