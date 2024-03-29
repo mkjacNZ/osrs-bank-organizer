@@ -14,6 +14,6 @@ public interface BankOrganizerConfig extends Config
 	)
 	default String greeting()
 	{
-		return "Hello";
+		return "Bank Organizer Loaded";
 	}
 }

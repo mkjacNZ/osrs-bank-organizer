@@ -36,13 +36,13 @@ public class BankOrganizerPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("Example started!");
+		log.info("Bank Organizer started!");
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.info("Example stopped!");
+		log.info("Bank Organizer stopped!");
 	}
 
 	//@Subscribe
